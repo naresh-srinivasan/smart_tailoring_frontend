@@ -26,8 +26,8 @@ const PrimaryButton = ({ children, onClick, type = "button", disabled = false, l
     type={type}
     onClick={onClick}
     disabled={disabled || loading}
-    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium py-3.5 px-4 
-               rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 
+    className="w-full bg-blue-600 text-white font-medium py-3.5 px-4 
+               rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 
                focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 
                disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
   >
@@ -236,7 +236,7 @@ export default function AuthPage() {
   // ----------------------
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center">
         <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl">
           <div className="flex flex-col items-center space-y-4">
             <div className="w-12 h-12 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -251,7 +251,7 @@ export default function AuthPage() {
   // Render Auth Page
   // ----------------------
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-6">
       <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl max-w-md w-full p-8 border border-white/20 relative overflow-hidden">
         
         {/* Decorative background elements */}

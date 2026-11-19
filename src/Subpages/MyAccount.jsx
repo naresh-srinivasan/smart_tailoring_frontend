@@ -54,7 +54,7 @@ export default function MyAccount() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-700 to-indigo-700 py-16 text-center text-white shadow-md">
+      <div className="bg-blue-700 py-16 text-center text-white shadow-md">
         <h1 className="text-3xl md:text-4xl font-extrabold">My Account</h1>
         <p className="mt-2 text-blue-200 text-lg">
           Manage your profile, addresses & account security

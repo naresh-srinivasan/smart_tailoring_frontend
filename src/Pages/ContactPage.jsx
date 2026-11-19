@@ -39,7 +39,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 p-6 md:p-20 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-100 p-6 md:p-20 flex items-center justify-center">
       <motion.div
         className="max-w-7xl w-full bg-white rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden"
         initial={{ opacity: 0, y: 30 }}
@@ -47,7 +47,7 @@ export default function Contact() {
         transition={{ duration: 0.6 }}
       >
         {/* Contact Form */}
-        <div className="flex-1 p-10 md:p-16 bg-gradient-to-b from-white to-gray-50">
+        <div className="flex-1 p-10 md:p-16 bg-white ">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">
             Get in Touch
           </h1>

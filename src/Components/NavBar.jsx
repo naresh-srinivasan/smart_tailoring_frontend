@@ -101,21 +101,21 @@ export default function NavBar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+      <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-2 flex justify-between items-center">
         {/* Logo */}
         <NavLink
           to="/"
           className="group flex items-center space-x-3"
         >
           <motion.div
-            className="text-3xl md:text-4xl font-bold select-none bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 bg-clip-text text-transparent group-hover:from-purple-600 group-hover:via-indigo-600 group-hover:to-blue-600 transition-all duration-500"
+            className="text-2xl md:text-3xl font-bold select-none text-indigo-600 group-hover:bg-purple-600 transition-all duration-500"
             style={{ fontFamily: "'Dancing Script', cursive" }}
             whileHover={{ scale: 1.05 }}
           >
             Weave Nest
           </motion.div>
           <motion.div
-            className="w-2 h-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="w-2 h-2 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           />
@@ -128,7 +128,7 @@ export default function NavBar() {
               <NavLink
                 to={path}
                 className={({ isActive }) =>
-                  `relative text-gray-700 hover:text-indigo-600 font-medium text-base transition-all duration-300 px-5 py-2.5 rounded-lg hover:bg-indigo-50 ${
+                  `relative text-gray-700 hover:text-indigo-600 font-medium text-sm transition-all duration-300 px-3.5 py-1.5 rounded-lg hover:bg-indigo-50 ${
                     isActive ? "text-indigo-600 bg-indigo-50 border border-indigo-100" : ""
                   }`
                 }
@@ -138,7 +138,7 @@ export default function NavBar() {
                     {label}
                     {isActive && (
                       <motion.div
-                        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
+                        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-indigo-500 rounded-full"
                         layoutId="activeTab"
                         initial={false}
                         transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -164,7 +164,7 @@ export default function NavBar() {
               <FaBell className="text-lg text-gray-600 hover:text-indigo-600 transition-colors" />
               {unreadCount > 0 && (
                 <motion.span
-                  className="absolute -top-1 -right-1 min-w-[18px] h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full flex items-center justify-center px-1.5 border-2 border-white"
+                  className="absolute -top-1 -right-1 min-w-[18px] h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center px-1.5 border-2 border-white"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 500 }}
@@ -179,7 +179,7 @@ export default function NavBar() {
           {user ? (
             <div className="relative">
               <motion.div
-                className="flex items-center space-x-3 cursor-pointer p-2 pl-3 pr-4 rounded-lg bg-gray-100 hover:bg-indigo-50 border border-gray-200 hover:border-indigo-200 transition-all duration-300"
+                className="flex items-center space-x-2 cursor-pointer p-1 pl-2 pr-3 rounded-lg bg-gray-100 hover:bg-indigo-50 border border-gray-200 hover:border-indigo-200 transition-all duration-300"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setProfileOpen((prev) => !prev)}
@@ -216,7 +216,7 @@ export default function NavBar() {
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="absolute right-0 mt-3 w-64 bg-white/95 backdrop-blur-lg rounded-xl border border-gray-200 shadow-2xl shadow-gray-900/10 overflow-hidden z-50"
                   >
-                    <div className="p-4 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+                    <div className="p-4 border-b border-gray-100 bg-indigo-50 ">
                       <div className="flex items-center space-x-3">
                         <div className="relative">
                           <img
@@ -274,7 +274,7 @@ export default function NavBar() {
             </div>
           ) : (
             <motion.button
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-300"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-1.5 text-sm rounded-lg text-sm font-semibold shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-300"
               onClick={() => navigate("/login")}
               whileHover={{ scale: 1.05, y: -1 }}
               whileTap={{ scale: 0.95 }}
@@ -361,7 +361,7 @@ export default function NavBar() {
                       <span>Notifications</span>
                     </div>
                     {unreadCount > 0 && (
-                      <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                      <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
                         {unreadCount}
                       </span>
                     )}
@@ -380,7 +380,7 @@ export default function NavBar() {
                 </>
               ) : (
                 <motion.button
-                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold shadow-lg transition-all duration-300"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-semibold shadow-lg transition-all duration-300"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 }}

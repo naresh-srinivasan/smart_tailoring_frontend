@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
@@ -44,6 +44,12 @@ function AdminRoute({ children }) {
   return isAdmin ? children : <Navigate to="/login" replace />;
 }
 
+// ---------------- Footer (hidden on admin pages) ----------------
+function SiteFooter() {
+  const { pathname } = useLocation();
+  return pathname.startsWith("/admin") ? null : <Footer />;
+}
+
 // ---------------- App Component ----------------
 export default function App() {
   return (
@@ -51,7 +57,7 @@ export default function App() {
       <Router>
         <NavBar />
 
-        <div className="pt-20 min-h-screen">
+        <div className="pt-14 min-h-screen">
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
@@ -211,7 +217,7 @@ export default function App() {
           </Routes>
         </div>
 
-        <Footer />
+        <SiteFooter />
       </Router>
     </AuthProvider>
   );

@@ -1,109 +1,72 @@
 import React, { useEffect, useState } from "react";
+import api, { errorMessage } from "../api";
+import { Alert, Badge, Button, DataTable, PageHeader } from "../Components/Admin/ui";
+
+const formatDateTime = (d) =>
+  d ? new Date(d).toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "-";
 
 export default function AdminNotifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const API_BASE = "http://localhost:5000/api/api";
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    const fetchNotifications = async () => {
+    (async () => {
       try {
-        setLoading(true);
-        const res = await fetch(`${API_BASE}/notifications`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-
-        if (Array.isArray(data)) {
-          setNotifications(data);
-        } else {
-          console.error("Unexpected notifications response:", data);
-          setNotifications([]);
-        }
+        const res = await api.get("/notifications");
+        setNotifications(res.data.notifications || []);
       } catch (err) {
-        console.error("Error fetching notifications:", err);
-        setError(err.message);
+        setError(errorMessage(err, "Failed to load notifications."));
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchNotifications();
+    })();
   }, []);
 
   const markAsRead = async (id) => {
     try {
-      await fetch(`${API_BASE}/notifications/${id}/read`, {
-        method: "PATCH",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-      );
+      await api.patch(`/notifications/${id}/read`);
+      setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
     } catch (err) {
-      console.error("Error marking notification as read:", err);
+      setError(errorMessage(err, "Could not mark as read."));
     }
   };
 
-  const deleteNotification = async (id) => {
+  const remove = async (id) => {
     try {
-      await fetch(`${API_BASE}/notifications/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await api.delete(`/notifications/${id}`);
       setNotifications((prev) => prev.filter((n) => n.id !== id));
     } catch (err) {
-      console.error("Error deleting notification:", err);
+      setError(errorMessage(err, "Could not delete notification."));
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-gray-500" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
-    );
-  }
+  const unread = notifications.filter((n) => !n.read).length;
 
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2">Error</h2>
-          <p className="text-lg">{error}</p>
+  const columns = [
+    { key: "title", label: "Title", sortable: true, render: (n) => <span className={n.read ? "text-gray-600" : "font-semibold text-gray-900"}>{n.title}</span> },
+    { key: "message", label: "Message", className: "max-w-md" },
+    { key: "createdAt", label: "Received", sortable: true, render: (n) => formatDateTime(n.createdAt) },
+    {
+      key: "read", label: "Status", sortable: true, sortValue: (n) => (n.read ? 1 : 0),
+      render: (n) => <Badge color={n.read ? "gray" : "blue"}>{n.read ? "Read" : "Unread"}</Badge>,
+    },
+    {
+      key: "actions", label: "Actions", align: "right",
+      render: (n) => (
+        <div className="flex justify-end gap-1.5">
+          {!n.read && <Button size="sm" onClick={() => markAsRead(n.id)}>Mark read</Button>}
+          <Button size="sm" variant="danger" onClick={() => remove(n.id)}>Delete</Button>
         </div>
-      </div>
-    );
-  }
+      ),
+    },
+  ];
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-6 lg:p-8">
-      <h1 className="text-3xl font-bold mb-4">Notifications</h1>
-      <ul className="divide-y divide-gray-200">
-        {notifications.map((notification) => (
-          <li key={notification.id} className="py-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-lg font-bold">{notification.title}</h2>
-              <small className="text-gray-500">{notification.timestamp}</small>
-            </div>
-            <p className="text-lg">{notification.message}</p>
-            <div className="flex justify-end mt-2">
-              <button onClick={() => markAsRead(notification.id)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                Mark as read
-              </button>
-              <button onClick={() => deleteNotification(notification.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <PageHeader title="Notifications" subtitle={`${unread} unread of ${notifications.length}`} />
+      <Alert type="error" onClose={() => setError("")}>{error}</Alert>
+      <DataTable columns={columns} rows={notifications} loading={loading} emptyText="You're all caught up" defaultSort={{ key: "createdAt", dir: "desc" }} />
     </div>
   );
-};
+}

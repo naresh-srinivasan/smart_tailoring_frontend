@@ -241,7 +241,7 @@ export default function BookNow() {
     });
     
     return total;
-  }, [materialNeeded, materialPricePerMeter, dressType, gender, discount, formData.complementaryItemCost]);
+  }, [materialNeeded, materialPricePerMeter, dressType, gender, discount, formData]);
 
   /* ---------------- UI Helpers ---------------- */
   const toggleInstruction = (name) =>
@@ -472,16 +472,16 @@ export default function BookNow() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-8 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-indigo-50 py-3 sm:py-4 px-3 sm:px-4 relative overflow-hidden">
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 -left-20 w-72 h-72 bg-indigo-200/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 -right-20 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-indigo-100/30 to-purple-100/30 rounded-full blur-2xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-100/30 rounded-full blur-2xl"></div>
       </div>
 
       <motion.div
-        className="relative max-w-7xl mx-auto"
+        className="relative max-w-6xl mx-auto" style={{ zoom: 0.9 }}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -489,49 +489,33 @@ export default function BookNow() {
       >
         {/* Header Section */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-3"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-indigo-600 mb-1">
             Create Your Perfect Garment
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="hidden sm:block text-sm text-gray-600 max-w-3xl mx-auto">
             Experience the future of tailoring with our smart design process. Every stitch crafted to perfection.
           </p>
-          
-          {/* Progress Bar */}
-          <div className="mt-8 max-w-2xl mx-auto">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium text-indigo-600">Step {step} of 5</span>
-              <span className="text-sm font-medium text-gray-500">{Math.round((step/5) * 100)}% Complete</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-              <motion.div 
-                className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${(step/5) * 100}%` }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-              />
-            </div>
-          </div>
         </motion.div>
 
         {/* Main Content Card */}
         <motion.div
-          className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl shadow-indigo-500/10 border border-white/20 overflow-hidden"
+          className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl shadow-indigo-500/10 border border-white/20 overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           {/* Step Indicator */}
-          <div className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 px-8 py-6 border-b border-indigo-100/50">
+          <div className="bg-indigo-500/10 px-3 sm:px-6 py-3 border-b border-indigo-100/50">
             <StepIndicator step={step} titles={stepTitles} />
           </div>
 
           {/* Step Content */}
-          <div className="p-8 md:p-12">
+          <div className="p-4 md:p-6">
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}
@@ -541,20 +525,20 @@ export default function BookNow() {
                 exit="exit"
               >
                 {step === 1 && (
-                  <div className="space-y-8">
-                    <div className="text-center mb-8">
-                      <h2 className="text-3xl font-bold text-gray-800 mb-4">Choose Your Style</h2>
-                      <p className="text-lg text-gray-600">Let's start by selecting the gender style for your garment</p>
+                  <div className="space-y-4">
+                    <div className="text-center mb-3">
+                      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">Choose Your Style</h2>
+                      <p className="text-sm md:text-base text-gray-600">Let's start by selecting the gender style for your garment</p>
                     </div>
                     <GenderSelection onSelect={handleGenderSelect} />
                   </div>
                 )}
 
                 {step === 2 && (
-                  <div className="space-y-8">
-                    <div className="text-center mb-8">
-                      <h2 className="text-3xl font-bold text-gray-800 mb-4">Select Garment Type</h2>
-                      <p className="text-lg text-gray-600">Choose the type of {gender} garment you'd like to create</p>
+                  <div className="space-y-4">
+                    <div className="text-center mb-3">
+                      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">Select Garment Type</h2>
+                      <p className="text-sm md:text-base text-gray-600">Choose the type of {gender} garment you'd like to create</p>
                     </div>
                     <DressTypeSelection
                       gender={gender}
@@ -566,10 +550,10 @@ export default function BookNow() {
                 )}
 
                 {step === 3 && (
-                  <div className="space-y-8">
-                    <div className="text-center mb-8">
-                      <h2 className="text-3xl font-bold text-gray-800 mb-4">Style & Materials</h2>
-                      <p className="text-lg text-gray-600">Customize your {dressType} with premium materials and styling options</p>
+                  <div className="space-y-4">
+                    <div className="text-center mb-3">
+                      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">Style & Materials</h2>
+                      <p className="text-sm md:text-base text-gray-600">Customize your {dressType} with premium materials and styling options</p>
                     </div>
                     <StyleAndMaterialStep
                       gender={gender}
@@ -600,11 +584,7 @@ export default function BookNow() {
                 )}
 
                 {step === 4 && (
-                  <div className="space-y-8">
-                    <div className="text-center mb-8">
-                      <h2 className="text-3xl font-bold text-gray-800 mb-4">Perfect Measurements</h2>
-                      <p className="text-lg text-gray-600">Provide your measurements for a perfect fit</p>
-                    </div>
+                  <div className="space-y-4">
                     <MeasurementsForm
                       gender={gender}
                       dressType={dressType}
@@ -641,11 +621,7 @@ export default function BookNow() {
                 )}
 
                 {step === 5 && (
-                  <div className="space-y-8">
-                    <div className="text-center mb-8">
-                      <h2 className="text-3xl font-bold text-gray-800 mb-4">Order Summary</h2>
-                      <p className="text-lg text-gray-600">Review your custom garment details and complete your order</p>
-                    </div>
+                  <div className="space-y-4">
                     <OrderSummary
                       gender={gender}
                       dressType={dressType}
@@ -689,7 +665,7 @@ export default function BookNow() {
           </div>
 
           {/* Footer Progress */}
-          <div className="bg-gradient-to-r from-gray-50 to-indigo-50/30 px-8 py-4 border-t border-gray-100">
+          <div className="bg-gray-50 px-4 py-2 border-t border-gray-100">
             <div className="flex justify-between items-center text-sm text-gray-600">
               <span>Weave Nest • Smart Tailoring</span>
               <span>Secure & Encrypted Process 🔒</span>
@@ -699,7 +675,7 @@ export default function BookNow() {
 
         {/* Footer Note */}
         <motion.div 
-          className="text-center mt-8 text-gray-500"
+          className="text-center mt-2 text-gray-500"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}

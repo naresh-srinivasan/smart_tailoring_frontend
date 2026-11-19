@@ -166,7 +166,7 @@ export default function Home() {
           <source src={pages} type="video/mp4" />
         </video>
 
-        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/50 to-black/80"></div>
+        <div className="absolute inset-0 bg-black/80 "></div>
 
         <div className="relative z-10 w-[90vw] max-w-7xl mx-auto px-6 text-center">
           <motion.div
@@ -184,7 +184,7 @@ export default function Home() {
             </motion.p>
 
             <h1
-              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent"
+              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 text-white "
               style={{ fontFamily: "'Dancing Script', cursive" }}
             >
               Weave Nest
@@ -225,7 +225,7 @@ export default function Home() {
       </section>
 
       {/* ===== ACHIEVEMENTS SECTION ===== */}
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900">
+      <section className="py-20 bg-black ">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -326,7 +326,7 @@ export default function Home() {
 
                 <div className="flex-1">
                   <div className="relative rounded-2xl overflow-hidden bg-white/5 p-8">
-                    <div className="aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center">
+                    <div className="aspect-video bg-blue-500/20 rounded-xl flex items-center justify-center">
                       <feature.icon className="w-16 h-16 text-white/40" />
                     </div>
                   </div>
@@ -394,7 +394,7 @@ export default function Home() {
       </section>
 
       {/* ===== WHY CHOOSE US SECTION ===== */}
-      <section className="py-20 bg-gradient-to-b from-gray-900 to-black">
+      <section className="py-20 bg-gray-900 ">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"

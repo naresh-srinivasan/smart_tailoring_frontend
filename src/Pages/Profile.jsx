@@ -47,7 +47,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-[90vh] bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col items-center py-10 px-6">
+    <div className="min-h-[90vh] bg-blue-50 flex flex-col items-center py-10 px-6">
       <div className="max-w-6xl w-full">
         <h1
           className="text-5xl font-extrabold text-[#286fad] mb-10 text-center drop-shadow-md"

@@ -15,53 +15,53 @@ export default function DressTypeSelection({
     const configs = {
       'Shirt': { 
         icon: '👔', 
-        gradient: 'from-indigo-500 to-blue-600',
-        hoverGradient: 'from-indigo-600 to-blue-700',
-        bgColor: 'from-indigo-50 to-blue-50',
+        gradient: 'bg-indigo-500 ',
+        hoverGradient: 'bg-indigo-600 ',
+        bgColor: 'bg-indigo-50 ',
         description: 'Formal & casual shirts'
       },
       'Dress': { 
         icon: '👗', 
-        gradient: 'from-purple-500 to-pink-600',
-        hoverGradient: 'from-purple-600 to-pink-700',
-        bgColor: 'from-purple-50 to-pink-50',
+        gradient: 'bg-purple-500 ',
+        hoverGradient: 'bg-purple-600 ',
+        bgColor: 'bg-purple-50 ',
         description: 'Elegant dresses'
       },
       'Suit': { 
         icon: '🤵', 
-        gradient: 'from-gray-600 to-slate-700',
-        hoverGradient: 'from-gray-700 to-slate-800',
-        bgColor: 'from-gray-50 to-slate-50',
+        gradient: 'bg-gray-600 ',
+        hoverGradient: 'bg-gray-700 ',
+        bgColor: 'bg-gray-50 ',
         description: 'Professional suits'
       },
       'Blouse': { 
         icon: '👚', 
-        gradient: 'from-rose-500 to-red-600',
-        hoverGradient: 'from-rose-600 to-red-700',
-        bgColor: 'from-rose-50 to-red-50',
+        gradient: 'bg-rose-500 ',
+        hoverGradient: 'bg-rose-600 ',
+        bgColor: 'bg-rose-50 ',
         description: 'Stylish blouses'
       },
       'Kurta': { 
         icon: '🥻', 
-        gradient: 'from-orange-500 to-amber-600',
-        hoverGradient: 'from-orange-600 to-amber-700',
-        bgColor: 'from-orange-50 to-amber-50',
+        gradient: 'bg-orange-500 ',
+        hoverGradient: 'bg-orange-600 ',
+        bgColor: 'bg-orange-50 ',
         description: 'Traditional kurtas'
       },
       'T-Shirt': { 
         icon: '👕', 
-        gradient: 'from-green-500 to-emerald-600',
-        hoverGradient: 'from-green-600 to-emerald-700',
-        bgColor: 'from-green-50 to-emerald-50',
+        gradient: 'bg-green-500 ',
+        hoverGradient: 'bg-green-600 ',
+        bgColor: 'bg-green-50 ',
         description: 'Comfortable t-shirts'
       }
     };
     
     return configs[type] || {
       icon: '👔',
-      gradient: 'from-indigo-500 to-purple-600',
-      hoverGradient: 'from-indigo-600 to-purple-700',
-      bgColor: 'from-indigo-50 to-purple-50',
+      gradient: 'bg-indigo-500 ',
+      hoverGradient: 'bg-indigo-600 ',
+      bgColor: 'bg-indigo-50 ',
       description: 'Custom garment'
     };
   };
@@ -92,24 +92,15 @@ export default function DressTypeSelection({
 
   return (
     <motion.div
-      className="flex flex-col items-center gap-12 max-w-6xl mx-auto"
+      className="flex flex-col items-center gap-4 max-w-6xl mx-auto"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      {/* Header */}
-      <motion.div className="text-center" variants={itemVariants}>
-        <h3 className="text-3xl font-bold text-gray-800 mb-4">
-          Choose {gender}'s Garment Type
-        </h3>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Select the type of garment you'd like to create from our premium collection
-        </p>
-      </motion.div>
 
       {/* Dress Type Grid */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
+        className="flex flex-wrap justify-center gap-3 w-full"
         variants={itemVariants}
       >
         {types.map((type, index) => {
@@ -117,7 +108,7 @@ export default function DressTypeSelection({
           return (
             <motion.button
               key={type}
-              className={`group relative overflow-hidden rounded-2xl border-2 transition-all duration-500 p-8 min-h-[220px] ${
+              className={`group relative overflow-hidden rounded-2xl border-2 transition-all duration-500 p-4 min-h-[150px] w-full sm:w-[240px] ${
                 hoveredType === type 
                   ? 'border-indigo-300 shadow-2xl shadow-indigo-500/20' 
                   : 'border-gray-200 hover:border-indigo-200'
@@ -134,17 +125,17 @@ export default function DressTypeSelection({
               whileTap={{ scale: 0.98 }}
             >
               {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${config.bgColor} opacity-30 group-hover:opacity-50 transition-opacity duration-500`} />
+              <div className={`absolute inset-0 ${config.bgColor} opacity-30 group-hover:opacity-50 transition-opacity duration-500`} />
               
               {/* Decorative Elements */}
               <div className="absolute top-4 right-4 w-16 h-16 bg-white/20 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500" />
               <div className="absolute bottom-4 left-4 w-12 h-12 bg-white/15 rounded-full blur-lg group-hover:scale-125 transition-transform duration-500" />
               
               {/* Content */}
-              <div className="relative flex flex-col items-center justify-center space-y-6 h-full text-center">
+              <div className="relative flex flex-col items-center justify-center space-y-3 h-full text-center">
                 {/* Icon */}
                 <motion.div 
-                  className={`p-4 rounded-xl bg-gradient-to-br ${config.gradient} shadow-lg group-hover:shadow-xl transition-all duration-300`}
+                  className={`p-4 rounded-xl ${config.gradient} shadow-lg group-hover:shadow-xl transition-all duration-300`}
                   whileHover={{ 
                     rotate: [0, -10, 10, 0],
                     scale: 1.15 
@@ -168,7 +159,7 @@ export default function DressTypeSelection({
 
                 {/* Select Button */}
                 <motion.div
-                  className={`px-6 py-3 bg-gradient-to-r ${config.gradient} hover:${config.hoverGradient} text-white rounded-lg font-semibold shadow-md group-hover:shadow-lg transition-all duration-300 flex items-center space-x-2`}
+                  className={`px-5 py-2 ${config.gradient} hover:${config.hoverGradient} text-white rounded-lg font-semibold shadow-md group-hover:shadow-lg transition-all duration-300 flex items-center space-x-2`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -188,7 +179,7 @@ export default function DressTypeSelection({
               <motion.div 
                 className="absolute inset-0 rounded-2xl"
                 style={{
-                  background: `linear-gradient(45deg, ${hoveredType === type ? 'rgba(99, 102, 241, 0.3)' : 'transparent'}, ${hoveredType === type ? 'rgba(147, 51, 234, 0.3)' : 'transparent'})`
+                  background: hoveredType === type ? 'rgba(99, 102, 241, 0.08)' : 'transparent'
                 }}
                 transition={{ duration: 0.3 }}
               />
@@ -200,7 +191,7 @@ export default function DressTypeSelection({
       {/* Back Button */}
       <motion.button
         onClick={onBack}
-        className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-indigo-50 hover:to-purple-50 text-gray-700 hover:text-gray-800 rounded-2xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 border-2 border-gray-200 hover:border-indigo-200"
+        className="group flex items-center gap-3 px-6 py-2 bg-gray-100 hover:bg-indigo-50 text-gray-700 hover:text-gray-800 rounded-2xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 border-2 border-gray-200 hover:border-indigo-200"
         variants={itemVariants}
         whileHover={{ 
           scale: 1.05, 
@@ -228,20 +219,6 @@ export default function DressTypeSelection({
         <p className="text-sm text-gray-500">
           Each garment is crafted with premium materials and precise measurements for the perfect fit
         </p>
-        <div className="flex items-center justify-center space-x-6 text-xs text-gray-400">
-          <div className="flex items-center space-x-1">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-            <span>Premium Quality</span>
-          </div>
-          <div className="flex items-center space-x-1">
-            <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-            <span>Custom Fit</span>
-          </div>
-          <div className="flex items-center space-x-1">
-            <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-            <span>Fast Delivery</span>
-          </div>
-        </div>
       </motion.div>
     </motion.div>
   );

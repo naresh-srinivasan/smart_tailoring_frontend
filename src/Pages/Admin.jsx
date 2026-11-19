@@ -24,6 +24,7 @@ import AdminInventory from "../Subpages/AdminInventory.jsx";
 import AdminNotifications from "../Subpages/AdminNotifications.jsx";
 import PromoCodes from "../Subpages/PromoCodes.jsx";
 import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 import {
   LineChart,
   Line,
@@ -39,6 +40,7 @@ import {
 } from "recharts";
 
 export default function AdminDashboard() {
+  const { user: authUser } = useAuth();
   const [activeSection, setActiveSection] = useState("overview");
   const [totalCustomers, setTotalCustomers] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
@@ -164,8 +166,8 @@ export default function AdminDashboard() {
     { 
       title: "Total Customers", 
       value: totalCustomers, 
-      color: "bg-gradient-to-br from-blue-500 to-blue-600",
-      icon: <FaUsers className="w-6 h-6" />,
+      color: "bg-blue-50 text-blue-600",
+      icon: <FaUsers className="w-5 h-5" />,
       change: "+12.5%",
       changeType: "positive",
       description: "Active users"
@@ -173,8 +175,8 @@ export default function AdminDashboard() {
     { 
       title: "Total Orders", 
       value: totalOrders, 
-      color: "bg-gradient-to-br from-green-500 to-green-600",
-      icon: <FaShoppingCart className="w-6 h-6" />,
+      color: "bg-green-50 text-green-600",
+      icon: <FaShoppingCart className="w-5 h-5" />,
       change: "+8.3%",
       changeType: "positive",
       description: "All time orders"
@@ -182,8 +184,8 @@ export default function AdminDashboard() {
     { 
       title: "Pending Orders", 
       value: pendingOrders, 
-      color: "bg-gradient-to-br from-yellow-500 to-yellow-600",
-      icon: <FaClipboardList className="w-6 h-6" />,
+      color: "bg-amber-50 text-amber-600",
+      icon: <FaClipboardList className="w-5 h-5" />,
       change: "-2.1%",
       changeType: "negative",
       description: "Awaiting processing"
@@ -191,8 +193,8 @@ export default function AdminDashboard() {
     { 
       title: "Completed Orders", 
       value: completedOrders, 
-      color: "bg-gradient-to-br from-emerald-500 to-emerald-600",
-      icon: <FaChartLine className="w-6 h-6" />,
+      color: "bg-emerald-50 text-emerald-600",
+      icon: <FaChartLine className="w-5 h-5" />,
       change: "+15.7%",
       changeType: "positive",
       description: "Successfully delivered"
@@ -223,104 +225,47 @@ export default function AdminDashboard() {
     switch (activeSection) {
       case "overview":
         return (
-          <div className="space-y-8 animate-fadeIn">
-            {/* Enhanced Header */}
-            <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-5">
-              <div>
-                <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent -mt-28 mb-3">
-                  Admin Dashboard
-                </h1>
-                <p className="text-gray-600 text-lg">
-                  Welcome back! Here's what's happening with your business today.
-                </p>
-              </div>
-              <div className="flex items-center gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:border-gray-400 transition-all duration-200 font-medium shadow-sm text-sm"
-                >
-                  <FaCalendarAlt className="w-3 h-3" />
-                  Last 30 days
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-medium shadow-lg text-sm"
-                >
-                  <FaDownload className="w-3 h-3" />
-                  Export Report
-                </motion.button>
-              </div>
+          <div className="space-y-4 animate-fadeIn">
+            {/* Header */}
+            <div className="pb-4 border-b border-gray-200">
+              <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+              <p className="text-gray-500 text-sm mt-1">
+                Welcome back{authUser?.name ? `, ${authUser.name}` : ""}. Here's what's happening with your business today.
+              </p>
             </div>
 
             {loading ? (
               <LoadingSpinner />
             ) : (
               <>
-                {/* Enhanced Stats Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {stats.map((stat, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.02, y: -4 }}
-                      className={`${stat.color} text-white rounded-xl p-5 shadow-lg relative overflow-hidden`}
-                    >
-                      {/* Background Pattern */}
-                      <div className="absolute top-0 right-0 w-16 h-16 bg-white bg-opacity-10 rounded-full -translate-y-4 translate-x-4"></div>
-                      <div className="absolute bottom-0 left-0 w-12 h-12 bg-white bg-opacity-5 rounded-full translate-y-2 -translate-x-2"></div>
-                      
-                      <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="p-2 bg-white bg-opacity-20 rounded-lg backdrop-blur-sm">
-                            {stat.icon}
-                          </div>
-                          <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold ${
-                            stat.changeType === 'positive' 
-                              ? 'bg-green-100 bg-opacity-90 text-green-800' 
-                              : 'bg-red-100 bg-opacity-90 text-red-800'
-                          }`}>
-                            {stat.changeType === 'positive' ? 
-                              <FaArrowUp className="w-2 h-2" /> : 
-                              <FaArrowDown className="w-2 h-2" />
-                            }
-                            {stat.change}
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="text-2xl font-bold mb-1">{stat.value.toLocaleString()}</h3>
-                          <p className="text-base font-semibold opacity-90">{stat.title}</p>
-                          <p className="text-xs opacity-75 mt-1">{stat.description}</p>
-                        </div>
+                {/* Key figures */}
+                <div className="grid grid-cols-2 xl:grid-cols-4 bg-white border border-gray-200 rounded-lg divide-x divide-y xl:divide-y-0 divide-gray-200">
+                  {stats.map((stat) => (
+                    <div key={stat.title} className="p-4 flex items-center gap-3">
+                      <div className={`p-2.5 rounded-md ${stat.color}`}>{stat.icon}</div>
+                      <div>
+                        <p className="text-2xl font-semibold text-gray-900 leading-tight">{stat.value.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500">{stat.title}</p>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
 
                 {/* Enhanced Charts Section */}
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
                   {/* Orders Received Chart */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
+                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-5"
                   >
                     <div className="mb-4">
-                      <h3 className="text-lg font-bold text-gray-900 mb-1">Orders Received</h3>
-                      <p className="text-gray-600 text-sm">Daily order trends</p>
+                      <h3 className="text-sm font-semibold text-gray-900">Orders received</h3>
+                      <p className="text-gray-500 text-xs">Daily order trend</p>
                     </div>
-                    <ResponsiveContainer width="100%" height={220}>
+                    <ResponsiveContainer width="100%" height={200}>
                       <AreaChart data={ordersByDate}>
-                        <defs>
-                          <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1}/>
-                          </linearGradient>
-                        </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis dataKey="date" stroke="#6b7280" fontSize={11} />
                         <YAxis stroke="#6b7280" fontSize={11} />
@@ -337,7 +282,8 @@ export default function AdminDashboard() {
                           type="monotone"
                           dataKey="count"
                           stroke="#3b82f6"
-                          fill="url(#colorOrders)"
+                          fill="#3b82f6"
+                          fillOpacity={0.15}
                           strokeWidth={2}
                         />
                       </AreaChart>
@@ -349,13 +295,13 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
+                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-5"
                   >
                     <div className="mb-4">
-                      <h3 className="text-lg font-bold text-gray-900 mb-1">Completed Orders</h3>
-                      <p className="text-gray-600 text-sm">Weekly completion rate</p>
+                      <h3 className="text-sm font-semibold text-gray-900">Completed orders</h3>
+                      <p className="text-gray-500 text-xs">Orders delivered per day</p>
                     </div>
-                    <ResponsiveContainer width="100%" height={220}>
+                    <ResponsiveContainer width="100%" height={200}>
                       <BarChart data={completedByDate}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis dataKey="date" stroke="#6b7280" fontSize={11} />
@@ -379,13 +325,13 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
+                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-5"
                   >
                     <div className="mb-4">
-                      <h3 className="text-lg font-bold text-gray-900 mb-1">Revenue by Day</h3>
-                      <p className="text-gray-600 text-sm">Daily revenue trends</p>
+                      <h3 className="text-sm font-semibold text-gray-900">Revenue by day</h3>
+                      <p className="text-gray-500 text-xs">Revenue per day (₹)</p>
                     </div>
-                    <ResponsiveContainer width="100%" height={220}>
+                    <ResponsiveContainer width="100%" height={200}>
                       <LineChart data={dailyRevenue}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis dataKey="date" stroke="#6b7280" fontSize={11} />
@@ -412,64 +358,13 @@ export default function AdminDashboard() {
                   </motion.div>
                 </div>
 
-                {/* Enhanced Quick Actions */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
-                >
-                  <div className="mb-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-1">Quick Actions</h3>
-                    <p className="text-gray-600 text-sm">Frequently used actions and shortcuts</p>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <motion.button
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setActiveSection("customers")}
-                      className="flex items-center gap-3 p-4 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-lg hover:from-blue-100 hover:to-blue-200 transition-all duration-200 group"
-                    >
-                      <div className="p-2 bg-blue-500 text-white rounded-lg group-hover:bg-blue-600 transition-colors">
-                        <FaUsers className="w-4 h-4" />
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-gray-900 text-sm">View All Customers</p>
-                        <p className="text-xs text-blue-600">Manage customer data</p>
-                      </div>
-                    </motion.button>
-
-                    <motion.button
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setActiveSection("orders")}
-                      className="flex items-center gap-3 p-4 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-lg hover:from-green-100 hover:to-green-200 transition-all duration-200 group"
-                    >
-                      <div className="p-2 bg-green-500 text-white rounded-lg group-hover:bg-green-600 transition-colors">
-                        <FaClipboardList className="w-4 h-4" />
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-gray-900 text-sm">Manage Orders</p>
-                        <p className="text-xs text-green-600">Process and track orders</p>
-                      </div>
-                    </motion.button>
-
-                    <motion.button
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setActiveSection("notifications")}
-                      className="flex items-center gap-3 p-4 bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 rounded-lg hover:from-red-100 hover:to-red-200 transition-all duration-200 group"
-                    >
-                      <div className="p-2 bg-red-500 text-white rounded-lg group-hover:bg-red-600 transition-colors">
-                        <FaBell className="w-4 h-4" />
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-gray-900 text-sm">Check Notifications</p>
-                        <p className="text-xs text-red-600">View updates</p>
-                      </div>
-                    </motion.button>
-                  </div>
-                </motion.div>
+                {/* Shortcuts */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 mr-1">Shortcuts</span>
+                  <button onClick={() => setActiveSection("customers")} className="px-3 py-1.5 text-sm font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700">View customers</button>
+                  <button onClick={() => setActiveSection("orders")} className="px-3 py-1.5 text-sm font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700">Manage orders</button>
+                  <button onClick={() => setActiveSection("notifications")} className="px-3 py-1.5 text-sm font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700">Notifications</button>
+                </div>
               </>
             )}
           </div>
@@ -484,10 +379,10 @@ export default function AdminDashboard() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-5"
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg">
+              <div className="p-2 bg-purple-500 text-white rounded-lg">
                 <FaRuler className="w-5 h-5" />
               </div>
               <div>
@@ -514,7 +409,7 @@ export default function AdminDashboard() {
             className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 max-w-md mx-auto"
           >
             <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FaUser className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Admin Profile</h3>
@@ -524,7 +419,7 @@ export default function AdminDashboard() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleLogout}
-              className="w-full px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium shadow-lg"
+              className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-200 font-medium shadow-lg"
             >
               Logout
             </motion.button>
@@ -588,139 +483,90 @@ export default function AdminDashboard() {
         }
       `}</style>
 
-      <div className="admin-dashboard-container bg-gradient-to-br from-gray-50 to-gray-100">
-        
-        {/* Mobile Menu Button - Only visible on mobile when sidebar is needed */}
-        <div 
-          className="lg:hidden fixed bg-white/95 backdrop-blur-sm border-b border-gray-200 w-full flex items-center justify-between px-4 py-3 z-40"
-          style={{ top: NAVBAR_HEIGHT }}
-        >
-          <h2 className="text-lg font-semibold text-gray-800">Admin Dashboard</h2>
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+      <div className="admin-dashboard-container bg-gray-50 lg:flex" style={{ minHeight: "calc(100vh - 3.5rem)" }}>
+
+        {/* Mobile top bar */}
+        <div className="lg:hidden sticky top-14 z-30 bg-white border-b border-gray-200 flex items-center justify-between px-4 py-3">
+          <h2 className="text-base font-semibold text-gray-800">Admin Dashboard</h2>
+          <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="Toggle menu"
           >
-            {sidebarOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-          </motion.button>
+            {sidebarOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
+          </button>
         </div>
 
-        {/* SIDEBAR - Positioned under your existing navbar */}
-        <aside 
+        {/* Sidebar: drawer on mobile, sticky column on desktop */}
+        <aside
           className={`
-            fixed left-0 w-64 bg-white shadow-lg border-r border-gray-200 
-            transform transition-transform duration-300 ease-in-out z-30
-            ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
-            lg:translate-x-0
+            fixed lg:sticky top-14 left-0 z-40 lg:z-20 w-64 flex-shrink-0 flex flex-col
+            bg-white border-r border-gray-200
+            h-[calc(100vh-3.5rem)] lg:self-start
+            transform transition-transform duration-300 ease-in-out
+            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
           `}
-          style={{ 
-            top: NAVBAR_HEIGHT, 
-            height: `calc(100vh - ${NAVBAR_HEIGHT})` 
-          }}
         >
-          
-          {/* Sidebar Header */}
-          <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-purple-600 flex-shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center shadow-md">
-                <FaChartLine className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <h2 className="text-base font-bold text-white">Dashboard</h2>
-                <p className="text-xs text-blue-100 font-medium">Management System</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation - Scrollable */}
-          <nav 
-            className="flex-1 p-3 space-y-1 sidebar-scroll" 
-            style={{ 
-              height: `calc(100vh - ${NAVBAR_HEIGHT} - 160px)`,
-              overflowY: 'auto'
-            }}
-          >
+          {/* Navigation */}
+          <nav className="flex-1 overflow-y-auto sidebar-scroll p-3 pt-4 space-y-0.5">
             {sections.map((sec) => {
               const isActive = activeSection === sec.name;
               return (
-                <motion.button
+                <button
                   key={sec.name}
-                  whileHover={{ scale: 1.02, x: 2 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`w-full flex items-center justify-between p-3 rounded-lg text-left transition-all duration-200 group ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left transition-colors duration-150 group ${
                     isActive
-                      ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border-2 border-blue-200 shadow-sm"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-2 border-transparent"
+                      ? "bg-blue-50 text-blue-700"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                   }`}
                   onClick={() => handleSectionClick(sec.name)}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`p-1.5 rounded-lg transition-all duration-200 ${
-                      isActive 
-                        ? 'bg-blue-500 text-white shadow-sm' 
-                        : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200'
-                    }`}>
+                    <div className={`p-1.5 rounded-md ${isActive ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-500 group-hover:bg-gray-200"}`}>
                       {sec.icon}
                     </div>
                     <span className="font-medium text-sm">{sec.label}</span>
                   </div>
-                  {sec.badge && (
-                    <span className={`px-2 py-1 text-xs font-bold rounded-full transition-colors duration-200 ${
-                      isActive ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200'
+                  {sec.badge ? (
+                    <span className={`min-w-[1.5rem] text-center px-2 py-0.5 text-xs font-semibold rounded-full ${
+                      isActive ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-600"
                     }`}>
-                      {sec.badge > 99 ? '99+' : sec.badge}
+                      {sec.badge > 99 ? "99+" : sec.badge}
                     </span>
-                  )}
-                </motion.button>
+                  ) : null}
+                </button>
               );
             })}
           </nav>
 
-          {/* Sidebar Footer - Always Visible */}
-          <div className="p-3 border-t border-gray-200 flex-shrink-0 bg-gray-50">
-            <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-gray-200 shadow-sm">
-              <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-600 rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
-                <FaUser className="w-4 h-4 text-white" />
+          {/* Signed-in admin */}
+          <div className="p-3 border-t border-gray-200 flex-shrink-0">
+            <div className="flex items-center gap-3 p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+              <div className="w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-semibold">
+                {(authUser?.name || "A").charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-gray-900 text-xs truncate">Administrator</p>
-                <p className="text-xs text-gray-500 truncate">admin@company.com</p>
+                <p className="font-medium text-gray-900 text-sm truncate">{authUser?.name || "Administrator"}</p>
+                <p className="text-xs text-gray-500 truncate">{authUser?.email || ""}</p>
               </div>
             </div>
           </div>
         </aside>
 
-        {/* MOBILE OVERLAY */}
+        {/* Mobile overlay */}
         {sidebarOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-20 lg:hidden"
-            style={{ top: `calc(${NAVBAR_HEIGHT} + 60px)` }}
+          <div
+            className="fixed inset-0 top-14 bg-black/30 z-30 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
 
-        {/* MAIN CONTENT - FIXED: Properly positioned to the right of sidebar */}
-        <div className="flex">
-          {/* Sidebar Space Placeholder for Desktop */}
-          <div className="hidden lg:block w-64 flex-shrink-0"></div>
-          
-          {/* Main Content Area */}
-          <main 
-            className="flex-1 min-h-screen z-10 relative"
-            style={{ 
-              paddingTop: `calc(${NAVBAR_HEIGHT} + 60px)`,
-              marginLeft: '0'
-            }}
-          >
-            <div className="p-4 md:p-6">
-              {renderMainContent()}
-            </div>
-          </main>
-        </div>
+        {/* Main content */}
+        <main className="flex-1 min-w-0">
+          <div className="p-4 md:p-6 max-w-[1400px] mx-auto">
+            {renderMainContent()}
+          </div>
+        </main>
       </div>
     </>
   );

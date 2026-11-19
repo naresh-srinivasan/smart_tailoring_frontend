@@ -28,13 +28,13 @@ export default function OrdersPage() {
   const navigate = useNavigate();
 
   const statusColors = {
-    Pending: "bg-gradient-to-r from-yellow-400 to-yellow-500 text-white",
-    "Order Accepted": "bg-gradient-to-r from-blue-400 to-blue-500 text-white",
-    Shipped: "bg-gradient-to-r from-purple-400 to-purple-500 text-white",
-    "Out for Delivery": "bg-gradient-to-r from-orange-400 to-orange-500 text-white",
-    Delivered: "bg-gradient-to-r from-green-400 to-green-500 text-white",
-    Cancelled: "bg-gradient-to-r from-red-400 to-red-500 text-white",
-    Returned: "bg-gradient-to-r from-gray-400 to-gray-500 text-white",
+    Pending: "bg-yellow-400 text-white",
+    "Order Accepted": "bg-blue-400 text-white",
+    Shipped: "bg-purple-400 text-white",
+    "Out for Delivery": "bg-orange-400 text-white",
+    Delivered: "bg-green-400 text-white",
+    Cancelled: "bg-red-400 text-white",
+    Returned: "bg-gray-400 text-white",
   };
 
   useEffect(() => {
@@ -260,7 +260,7 @@ export default function OrdersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen bg-blue-50 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent mx-auto"></div>
           <p className="text-xl text-gray-600 font-medium">Loading your orders...</p>
@@ -271,7 +271,7 @@ export default function OrdersPage() {
 
   if (!orders.length) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen bg-blue-50 flex items-center justify-center">
         <div className="text-center space-y-4 p-8">
           <div className="text-6xl text-gray-400 mb-4">📦</div>
           <h2 className="text-2xl font-bold text-gray-800">No Orders Found</h2>
@@ -286,7 +286,7 @@ export default function OrdersPage() {
     .filter(o => o.User?.name.toLowerCase().includes(searchTerm.toLowerCase()) || o.id.toString().includes(searchTerm));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 px-4 lg:px-8">
+    <div className="min-h-screen bg-blue-50 py-8 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto">
 
         {/* Enhanced Filters */}
@@ -310,7 +310,7 @@ export default function OrdersPage() {
                 key={status}
                 className={`px-6 py-2 rounded-full font-medium border-2 transition-all duration-300 transform hover:scale-105 ${
                   statusFilter === status 
-                    ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white border-transparent shadow-lg" 
+                    ? "bg-blue-500 text-white border-transparent shadow-lg" 
                     : "bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:shadow-md"
                 }`}
                 onClick={() => setStatusFilter(status)}
@@ -336,7 +336,7 @@ export default function OrdersPage() {
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                      <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
                         {orders.length - index}
                       </div>
                       <div>
@@ -372,7 +372,7 @@ export default function OrdersPage() {
                       {expandedOrderId === order.id ? "Hide Details" : "View Details"}
                     </button>
                     <button
-                      className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
+                      className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
                       onClick={(e) => {
                         e.stopPropagation();
                         downloadBillPDF(order);
@@ -387,7 +387,7 @@ export default function OrdersPage() {
 
               {/* Expanded Details */}
               {expandedOrderId === order.id && (
-                <div className="border-t border-gray-100 bg-gradient-to-br from-gray-50 to-blue-50 p-6 space-y-6">
+                <div className="border-t border-gray-100 bg-gray-50 p-6 space-y-6">
                   {/* Order Details Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div className="bg-white p-4 rounded-xl shadow-sm">
@@ -418,7 +418,7 @@ export default function OrdersPage() {
 
                   {/* Measurements Table */}
                   <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                    <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4">
+                    <div className="bg-blue-500 text-white p-4">
                       <h4 className="font-semibold">Measurements</h4>
                     </div>
                     <div className="overflow-x-auto">
@@ -474,7 +474,7 @@ export default function OrdersPage() {
                           />
                           <div className="flex gap-3">
                             <button
-                              className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
+                              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
                               onClick={() => submitCancellation(order.id)}
                             >
                               Confirm Cancellation
@@ -489,7 +489,7 @@ export default function OrdersPage() {
                         </div>
                       ) : (
                         <button
-                          className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
+                          className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
                           onClick={() => handleCancelClick(order.id)}
                         >
                           Cancel Order
@@ -503,7 +503,7 @@ export default function OrdersPage() {
                       <div className="flex flex-wrap gap-3">
                         {!order.feedback ? (
                           <button
-                            className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+                            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
                             onClick={() => openFeedbackModal(order.id)}
                           >
                             <FaStar />
@@ -511,7 +511,7 @@ export default function OrdersPage() {
                           </button>
                         ) : (
                           <button
-                            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
                             onClick={() => openFeedbackModal(order.id, order.feedback)}
                           >
                             <FaEdit />
@@ -520,7 +520,7 @@ export default function OrdersPage() {
                         )}
                         {!order.returnReason && (
                           <button
-                            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
+                            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
                             onClick={() => openReturnModal(order.id)}
                           >
                             Return Order
@@ -532,7 +532,7 @@ export default function OrdersPage() {
 
                   {/* Feedback Display */}
                   {order.feedback && (
-                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
+                    <div className="bg-green-50 p-6 rounded-xl border border-green-200">
                       <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
                         <FaStar className="text-yellow-400" />
                         Your Feedback
@@ -549,7 +549,7 @@ export default function OrdersPage() {
 
                   {/* Return Reason Display */}
                   {order.returnReason && (
-                    <div className="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-xl border border-yellow-200">
+                    <div className="bg-yellow-50 p-4 rounded-xl border border-yellow-200">
                       <h4 className="font-semibold text-gray-800 mb-2">Return Reason</h4>
                       <p className="text-gray-700">{order.returnReason}</p>
                     </div>
@@ -565,7 +565,7 @@ export default function OrdersPage() {
       {feedbackOrderId && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
           <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl transform transition-all duration-300 scale-100">
-            <div className="sticky top-0 bg-gradient-to-r from-blue-500 to-purple-500 text-white p-6 rounded-t-3xl">
+            <div className="sticky top-0 bg-blue-500 text-white p-6 rounded-t-3xl">
               <div className="flex items-center justify-between">
                 <h3 className="text-2xl font-bold">
                   {isEditingFeedback ? "Edit Your Feedback" : "Share Your Experience"}
@@ -611,7 +611,7 @@ export default function OrdersPage() {
                   Cancel
                 </button>
                 <button
-                  className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
+                  className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
                   onClick={submitFeedback}
                 >
                   {isEditingFeedback ? "Update Feedback" : "Submit Feedback"}
@@ -626,7 +626,7 @@ export default function OrdersPage() {
       {returnOrderId && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
           <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl transform transition-all duration-300 scale-100">
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-6 rounded-t-3xl">
+            <div className="bg-orange-500 text-white p-6 rounded-t-3xl">
               <div className="flex items-center justify-between">
                 <h3 className="text-2xl font-bold">Return Order</h3>
                 <button
@@ -674,7 +674,7 @@ export default function OrdersPage() {
                   Cancel
                 </button>
                 <button
-                  className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
+                  className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
                   onClick={() => submitReturn(returnOrderId)}
                 >
                   Submit Return

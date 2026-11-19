@@ -16,6 +16,7 @@ export default function MeasurementsForm({
   toggleInstruction,
   handleExtraChange,
   materialNeeded,
+  materialPricePerMeter,
   materialCosts,
   material,
   color,
@@ -287,46 +288,10 @@ export default function MeasurementsForm({
   return (
 
     
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-      <div className="container mx-auto max-w-6xl px-4 py-4">
-      {material && (
-  <div className="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm flex items-start justify-between">
-    <div>
-      <h3 className="text-lg font-semibold text-gray-800 mb-3">
-        Your Selected Fabric & Style
-      </h3>
-      <ul className="space-y-1 text-sm text-gray-700">
-        <li><strong>Material:</strong> {material}</li>
-        <li><strong>Color:</strong> {color}</li>
-        <li><strong>Pattern:</strong> {pattern}</li>
-        <li><strong>Collar:</strong> {collarType}</li>
-        <li><strong>Sleeve:</strong> {sleeveType}</li>
-        <li><strong>Button Type:</strong> {buttonType}</li>
-        <li><strong>Button Color:</strong> {buttonColor}</li>
-      </ul>
-    </div>
-
-    {/* ✅ Change button to go back */}
-    <button
-      onClick={onBack} 
-      className="ml-4 px-3 py-1 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-    >
-      Change
-    </button>
-  </div>
-)}
+    <div className="bg-slate-50 ">
+      <div className="container mx-auto max-w-6xl px-0 py-0">
         {/* Compact Header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 shadow-md mb-4">
-            <FaRuler className="w-5 h-5 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Custom Measurements for {dressType}
-          </h1>
-          <p className="text-gray-600 text-base">
-            Provide precise measurements for the perfect fit
-          </p>
-        </div>
+        <p className="text-center text-gray-600 text-sm mb-3">Provide precise measurements for the perfect fit</p>
 
         <form onSubmit={onSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
@@ -430,7 +395,7 @@ export default function MeasurementsForm({
                           )}
 
                           {selectedProfile && (
-                            <div className="mt-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-lg">
+                            <div className="mt-3 p-3 bg-green-50 border-2 border-green-200 rounded-lg">
                               <div className="flex items-start space-x-2">
                                 <div className="flex-shrink-0 mt-0.5">
                                   <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
@@ -460,7 +425,7 @@ export default function MeasurementsForm({
 
               {/* Body Measurements - Enhanced with Better Visual Hierarchy */}
               <section className="bg-white rounded-lg shadow-lg border-2 border-blue-200 overflow-hidden">
-                <div className="bg-gradient-to-r from-blue-50 to-blue-100 px-4 py-4 border-b border-blue-200">
+                <div className="bg-blue-50 px-4 py-4 border-b border-blue-200">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <div className="w-9 h-9 rounded-md bg-blue-600 flex items-center justify-center shadow-sm">
@@ -479,7 +444,7 @@ export default function MeasurementsForm({
                   </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-4">
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                     {fields.map((m) => {
                       const fieldValue = formData[m.name];
@@ -514,7 +479,7 @@ export default function MeasurementsForm({
                             </button>
                           </div>
                           {showInstructions[m.name] && (
-                            <div className="mt-2 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-r-lg text-xs shadow-sm">
+                            <div className="mt-2 p-3 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg text-xs shadow-sm">
                               <p className="text-blue-800 font-medium">{m.instruction}</p>
                             </div>
                           )}
@@ -680,6 +645,29 @@ export default function MeasurementsForm({
 
             {/* Right Column - Currency, Material & Summary (1/4 width) */}
             <div className="lg:col-span-1 space-y-4">
+              {material && (
+                <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg shadow-sm">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-sm font-semibold text-gray-800">Your Selection</h3>
+                    <button
+                      type="button"
+                      onClick={onBack}
+                      className="px-2.5 py-1 text-xs bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
+                    >
+                      Change
+                    </button>
+                  </div>
+                  <ul className="space-y-1 text-xs text-gray-700">
+                    <li><strong>Material:</strong> {material}</li>
+                    <li><strong>Color:</strong> {color}</li>
+                    <li><strong>Pattern:</strong> {pattern}</li>
+                    <li><strong>Collar:</strong> {collarType}</li>
+                    <li><strong>Sleeve:</strong> {sleeveType}</li>
+                    <li><strong>Button Type:</strong> {buttonType}</li>
+                    <li><strong>Button Color:</strong> {buttonColor || "-"}</li>
+                  </ul>
+                </div>
+              )}
               
               {/* Currency Selection - Compact */}
               <section className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
@@ -723,7 +711,7 @@ export default function MeasurementsForm({
 
               {/* Order Summary - Medium Size, Enhanced Visibility */}
               <section className="bg-white rounded-lg shadow-lg border-2 border-blue-200 overflow-hidden">
-                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-3">
+                <div className="bg-blue-600 text-white px-3 py-3">
                   <div className="flex items-center space-x-2">
                     <div className="w-8 h-8 rounded-md bg-white bg-opacity-20 flex items-center justify-center">
                       <FaCalculator className="w-4 h-4 text-white" />
@@ -750,12 +738,12 @@ export default function MeasurementsForm({
                         <div className="flex justify-between items-center text-sm">
                           <span className="text-gray-700">Material</span>
                           <span className="font-semibold">
-                            {formatCurrency(
-                              material && inventory[material]
-                                ? inventory.material.price * (materialNeeded || 0)
-                                : 0
-                            )}
+                            {formatCurrency((materialPricePerMeter || 0) * parseFloat(materialNeeded || 0))}
                           </span>
+                        </div>
+                        <div className="flex justify-between items-center text-xs text-gray-500 -mt-1">
+                          <span>{parseFloat(materialNeeded || 0).toFixed(2)} m × {formatCurrency(materialPricePerMeter || 0)}/m</span>
+                          <span></span>
                         </div>
                         <div className="flex justify-between items-center text-sm">
                           <span className="text-gray-700">Labour</span>
@@ -807,7 +795,7 @@ export default function MeasurementsForm({
 
                     {/* Total */}
                     <div className="pt-2 border-t-2 border-gray-200">
-                      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-3 rounded-md">
+                      <div className="bg-blue-600 text-white p-3 rounded-md">
                         <div className="flex justify-between items-center">
                           <span className="text-base font-bold">Total</span>
                           <span className="text-lg font-bold">{formatCurrency(totalCost)}</span>
@@ -833,7 +821,7 @@ export default function MeasurementsForm({
             
             <button
               type="submit"
-              className="inline-flex items-center px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200"
+              className="inline-flex items-center px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-200"
             >
               Proceed to Summary
               <FaArrowRight className="w-4 h-4 ml-2" />

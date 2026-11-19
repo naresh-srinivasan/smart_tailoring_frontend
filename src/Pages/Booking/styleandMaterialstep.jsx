@@ -197,15 +197,15 @@ export default function StyleAndMaterialStep({
 
     return (
         <motion.div
-            className="space-y-8 max-w-6xl mx-auto"
+            className="space-y-4 max-w-6xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
             {/* Material Selection */}
             <motion.div className="space-y-4" variants={itemVariants}>
-                <label className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                    <span className="text-2xl">🧵</span>
+                <label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                    <span className="text-xl">🧵</span>
                     Premium Materials
                 </label>
                 <select
@@ -232,18 +232,18 @@ export default function StyleAndMaterialStep({
             <AnimatePresence>
                 {material && availableCombinations.length > 0 && (
                     <motion.div
-                        className="space-y-6"
+                        className="space-y-4"
                         variants={itemVariants}
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
                     >
-                        <label className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                            <span className="text-2xl">🎨</span>
+                        <label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                            <span className="text-xl">🎨</span>
                             Available Colors & Patterns
                         </label>
                         
-                        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
                             {availableCombinations.map((combination, index) => {
                                 const hexColor = getColorHex(combination.color);
                                 const discountPercentage = calculateDiscount(combination.original_price, combination.price);
@@ -255,7 +255,7 @@ export default function StyleAndMaterialStep({
                                         key={`${combination.id}-${index}`}
                                         className={`group cursor-pointer rounded-2xl border-2 transition-all duration-300 overflow-hidden ${
                                             isSelected
-                                                ? "border-indigo-500 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-lg shadow-indigo-500/20"
+                                                ? "border-indigo-500 bg-indigo-50 shadow-lg shadow-indigo-500/20"
                                                 : "border-gray-200 hover:border-indigo-300 hover:shadow-lg"
                                         }`}
                                         onClick={() => handleCombinationSelect(combination)}
@@ -286,7 +286,7 @@ export default function StyleAndMaterialStep({
                                             
                                             {/* Discount Badge */}
                                             {hasDiscount && (
-                                                <div className="absolute top-2 right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+                                                <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
                                                     {discountPercentage}% OFF
                                                 </div>
                                             )}
@@ -362,7 +362,7 @@ export default function StyleAndMaterialStep({
                         <AnimatePresence>
                             {selectedCombination && (
                                 <motion.div
-                                    className="bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-2xl p-6"
+                                    className="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-6"
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: "auto" }}
                                     exit={{ opacity: 0, height: 0 }}
@@ -399,10 +399,10 @@ export default function StyleAndMaterialStep({
 
             {/* Collar Selection */}
             {dressType === "Shirt" && (
-                <motion.div className="space-y-6" variants={itemVariants}>
+                <motion.div className="space-y-4" variants={itemVariants}>
                     <div className="flex items-center justify-between">
-                        <label className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                            <span className="text-2xl">👔</span>
+                        <label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                            <span className="text-xl">👔</span>
                             Collar Style
                         </label>
                         <button
@@ -413,7 +413,7 @@ export default function StyleAndMaterialStep({
                         </button>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                         {[
                             { label: "Regular", img: Regular },
                             { label: "Mandarin", img: Mandarin },
@@ -436,12 +436,12 @@ export default function StyleAndMaterialStep({
                                     <img
                                         src={c.img}
                                         alt={c.label}
-                                        className="w-full h-32 object-contain bg-gray-50"
+                                        className="w-full h-24 object-contain bg-gray-50"
                                         onError={(e) => {
                                             e.target.src = "/collars/default.png";
                                         }}
                                     />
-                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                                    <div className="absolute bottom-0 left-0 right-0 bg-black/70 p-2">
                                         <div className="text-white text-sm font-semibold text-center">
                                             {c.label}
                                         </div>
@@ -459,7 +459,7 @@ export default function StyleAndMaterialStep({
                     <AnimatePresence>
                         {showCollarInfo && (
                             <motion.div
-                                className="bg-gray-50 border border-gray-200 rounded-xl p-6"
+                                className="bg-gray-50 border border-gray-200 rounded-xl p-4"
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: "auto" }}
                                 exit={{ opacity: 0, height: 0 }}
@@ -477,8 +477,8 @@ export default function StyleAndMaterialStep({
             {/* Sleeve Type */}
             {dressType === "Shirt" && (
                 <motion.div className="space-y-4" variants={itemVariants}>
-                    <label className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                        <span className="text-2xl">👕</span>
+                    <label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                        <span className="text-xl">👕</span>
                         Sleeve Style
                     </label>
                     
@@ -504,7 +504,7 @@ export default function StyleAndMaterialStep({
                     <AnimatePresence>
                         {showSleeveInfo && (
                             <motion.div
-                                className="bg-indigo-50 border border-indigo-200 rounded-xl p-6"
+                                className="bg-indigo-50 border border-indigo-200 rounded-xl p-4"
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: "auto" }}
                                 exit={{ opacity: 0, height: 0 }}
@@ -536,14 +536,14 @@ export default function StyleAndMaterialStep({
             )}
 
             {/* Button Customization */}
-            <motion.div className="space-y-6" variants={itemVariants}>
-                <label className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                    <span className="text-2xl">🔘</span>
+            <motion.div className="space-y-4" variants={itemVariants}>
+                <label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                    <span className="text-xl">🔘</span>
                     Button Customization
                     <span className="text-sm font-normal text-gray-500">(Optional)</span>
                 </label>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <label className="text-gray-700 font-medium">Button Type</label>
                         <select
@@ -580,7 +580,7 @@ export default function StyleAndMaterialStep({
                 <motion.button
                     type="button"
                     onClick={onBack}
-                    className="flex items-center gap-3 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-all duration-300"
+                    className="flex items-center gap-3 px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-all duration-300"
                     whileHover={{ x: -5, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                 >
@@ -592,7 +592,7 @@ export default function StyleAndMaterialStep({
                     type="button"
                     onClick={onNext}
                     disabled={!material || !color}
-                    className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-lg"
+                    className="flex items-center gap-3 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                 >

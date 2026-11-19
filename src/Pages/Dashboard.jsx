@@ -46,7 +46,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen flex bg-gray-100">
       {/* Sidebar - Always Visible */}
-      <div className="w-64 bg-gradient-to-b from-blue-600 to-blue-400 shadow-lg p-6 flex flex-col justify-between text-white">
+      <div className="w-64 bg-blue-600 shadow-lg p-6 flex flex-col justify-between text-white">
         {/* Sidebar Header */}
         <div>
           <h2 className="text-3xl font-bold mb-8 tracking-wide">

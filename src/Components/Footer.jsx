@@ -57,7 +57,7 @@ export default function Footer() {
           subject: "Welcome to Weave Nest Newsletter!",
           html: `
             <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-              <div style="background: linear-gradient(135deg, #286fad, #1a5a94); padding: 40px 20px; text-align: center;">
+              <div style="background: #286fad; padding: 40px 20px; text-align: center;">
                 <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">Welcome to Weave Nest!</h1>
                 <p style="color: #d6ba73; margin: 10px 0 0 0; font-size: 16px;">Thank you for subscribing to our newsletter</p>
               </div>
@@ -123,7 +123,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white relative overflow-hidden">
+    <footer className="bg-slate-900 text-white relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl transform -translate-x-32 -translate-y-32"></div>
       <div className="absolute bottom-0 right-0 w-48 h-48 bg-purple-500/10 rounded-full blur-2xl transform translate-x-24 translate-y-24"></div>
@@ -135,7 +135,7 @@ export default function Footer() {
             {/* Company Info */}
             <div className="lg:col-span-1">
               <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                <h3 className="text-2xl font-bold mb-4 text-white ">
                   Weave Nest
                 </h3>
                 <p className="text-blue-100 text-sm leading-relaxed mb-4">
@@ -232,8 +232,8 @@ export default function Footer() {
                   <button
                     type="submit"
                     disabled={isSubscribing}
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium py-3 px-6 
-                             rounded-lg hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 
+                    className="bg-blue-600 text-white font-medium py-3 px-6 
+                             rounded-lg hover:bg-blue-700 transform hover:scale-105 
                              transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed
                              disabled:transform-none shadow-lg"
                   >

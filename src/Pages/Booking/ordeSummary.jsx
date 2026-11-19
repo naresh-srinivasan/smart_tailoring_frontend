@@ -272,7 +272,7 @@ export default function OrderSummary({
         <button
           onClick={onSubmit}
           disabled={isSubmitting || (!useProfileAddress && !deliveryAddress.trim()) || !expectedDate}
-          className="px-6 py-3 bg-gradient-to-r from-blue-600 to-yellow-500 text-white rounded-lg shadow-lg hover:from-blue-700 hover:to-yellow-600 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           {isSubmitting ? (
             <>
