@@ -416,7 +416,6 @@ export default function AuthPage() {
                     onChange={(e) => setRegRole(e.target.value)}
                   >
                     <option value="Customer">Customer</option>
-                    <option value="Admin">Admin</option>
                   </SelectField>
                 </div>
 
