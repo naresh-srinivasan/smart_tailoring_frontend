@@ -48,6 +48,25 @@ export default function StyleAndMaterialStep({
         fetchInventory();
     }, []);
 
+    // A fabric can arrive preselected (from the Designs page, or when coming back from a later step).
+    useEffect(() => {
+        if (selectedCombination || !material || !color || inventory.length === 0) return;
+        const matches = inventory.filter((i) => i.material_name === material && i.color === color);
+        const match = matches.find((i) => (i.pattern || "Solid") === (pattern || "Solid")) || matches[0];
+        if (match) {
+            setSelectedCombination({
+                id: match.id,
+                color: match.color,
+                pattern: match.pattern || "Solid",
+                material: match.material_name,
+                image: match.image_url || null,
+                price: match.price || 0,
+                original_price: match.original_price || match.price || 0,
+                total_quantity: match.total_quantity || 0,
+            });
+        }
+    }, [inventory, material, color, pattern, selectedCombination]);
+
     const allowedMaterials = [...new Set(inventory.map((item) => item.material_name))];
 
     const getAvailableCombinations = () => {

@@ -65,6 +65,38 @@ export default function BookNow() {
   const INTERNET_HANDLING_FEES = 30;
   const API_BASE = `${API_ORIGIN}/api/api`;
 
+  /* ---------------- Start from a design picked on the Designs page ---------------- */
+  useEffect(() => {
+    let raw = null;
+    try {
+      raw = sessionStorage.getItem("pendingDesign");
+      if (raw) sessionStorage.removeItem("pendingDesign");
+    } catch {
+      return;
+    }
+    if (!raw) return;
+    let design;
+    try {
+      design = JSON.parse(raw);
+    } catch {
+      return;
+    }
+    const config = measurementsData[design.gender]?.[design.dressType];
+    if (!config) return;
+
+    const initialData = {};
+    config.measurements.forEach((m) => (initialData[m.name] = ""));
+    setGender(design.gender);
+    setDressType(design.dressType);
+    setFormData(initialData);
+    setMaterial(design.material || "");
+    setColor(design.color || "");
+    setPattern(design.pattern || "");
+    setCollarType(design.collarType || "");
+    setSleeveType(design.sleeveType || "");
+    setStep(3);
+  }, []);
+
   /* ---------------- Fetch user profile ---------------- */
   useEffect(() => {
     const token = localStorage.getItem("token");
