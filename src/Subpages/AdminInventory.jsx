@@ -5,7 +5,7 @@ import api, { errorMessage } from "../api";
 import { Alert, Badge, Button, DataTable, Field, Modal, PageHeader, SearchInput, Toolbar, formatINR, inputClass } from "../Components/Admin/ui";
 
 const LOW_STOCK_METRES = 20;
-const emptyForm = { material_name: "", material_type: "", color: "", color_code: "", pattern: "", total_quantity: "", price: "" };
+const emptyForm = { material_name: "", material_type: "", color: "", color_code: "", pattern: "", total_quantity: "", price: "", image_url: "" };
 
 export default function AdminInventory() {
   const [items, setItems] = useState([]);
@@ -37,13 +37,30 @@ export default function AdminInventory() {
       : items;
   }, [items, search]);
 
+  // Shrink an uploaded photo to a small JPEG so it can be stored with the inventory row.
+  const onPhoto = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 480 / Math.max(img.width, img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+      setForm((f) => ({ ...f, image_url: canvas.toDataURL("image/jpeg", 0.8) }));
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror = () => setError("That file could not be read as an image.");
+    img.src = URL.createObjectURL(file);
+  };
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const close = () => setModal(null);
   const openAdd = () => { setForm(emptyForm); setModal({ mode: "add" }); };
   const openEdit = (i) => {
     setForm({
       material_name: i.material_name || "", material_type: i.material_type || "", color: i.color || "",
-      color_code: i.color_code || "", pattern: i.pattern || "", total_quantity: i.total_quantity ?? "", price: i.price ?? "",
+      color_code: i.color_code || "", pattern: i.pattern || "", total_quantity: i.total_quantity ?? "", price: i.price ?? "", image_url: i.image_url || "",
     });
     setModal({ mode: "edit", id: i.id });
   };
@@ -81,6 +98,12 @@ export default function AdminInventory() {
   };
 
   const columns = [
+    {
+      key: "image_url", label: "Photo",
+      render: (i) => i.image_url
+        ? <img src={i.image_url} alt="" className="w-10 h-10 rounded object-cover border border-gray-200" />
+        : <span className="w-10 h-10 rounded bg-gray-100 border border-gray-200 inline-block" />,
+    },
     { key: "material_name", label: "Material", sortable: true, render: (i) => <span className="font-medium text-gray-900">{i.material_name}</span> },
     { key: "material_type", label: "Type", sortable: true },
     {
@@ -152,6 +175,15 @@ export default function AdminInventory() {
             <Field label="Stock (metres)"><input type="number" min="0" step="0.1" className={inputClass} value={form.total_quantity} onChange={set("total_quantity")} /></Field>
             <Field label="Price per metre (₹)"><input type="number" min="0" className={inputClass} value={form.price} onChange={set("price")} /></Field>
           </div>
+          <Field label="Fabric photo" hint="Upload a close-up photo of the fabric, or paste an image link or /fabrics/name.jpg">
+            <div className="flex items-center gap-3">
+              {form.image_url ? <img src={form.image_url} alt="" className="w-14 h-14 rounded object-cover border border-gray-200" /> : <span className="w-14 h-14 rounded bg-gray-100 border border-gray-200" />}
+              <div className="flex-1 space-y-1.5">
+                <input type="file" accept="image/*" onChange={onPhoto} className="text-sm w-full" />
+                <input className={inputClass} value={form.image_url.startsWith("data:") ? "" : form.image_url} onChange={set("image_url")} placeholder={form.image_url.startsWith("data:") ? "Uploaded photo" : "Image link"} />
+              </div>
+            </div>
+          </Field>
           <button type="submit" className="hidden" />
         </form>
       </Modal>

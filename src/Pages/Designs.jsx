@@ -35,8 +35,16 @@ function DesignCard({ design, variants, onBook }) {
           pattern={pattern}
           collarType={design.collarType}
           sleeveType={design.sleeveType}
+          fabricImage={item.image_url}
           className="h-44"
         />
+        {item.image_url && (
+          <img
+            src={item.image_url}
+            alt={`${item.material_name} ${item.color} fabric`}
+            className="absolute bottom-3 right-3 w-16 h-16 rounded-md object-cover border-2 border-white shadow-sm"
+          />
+        )}
         <span className="absolute top-3 left-3 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded px-2 py-0.5">
           {design.gender} · {design.dressType}
         </span>
@@ -82,8 +90,8 @@ function DesignCard({ design, variants, onBook }) {
                   onClick={() => setSelectedId(v.id)}
                   title={`${v.material_name} · ${v.color} · ${v.pattern || "Solid"} · ${v.total_quantity > 0 ? `${Math.floor(v.total_quantity)} m` : "out of stock"}`}
                   aria-label={`${v.material_name} ${v.color}`}
-                  className={`w-6 h-6 rounded-full border-2 transition ${selected ? "border-blue-600 ring-2 ring-blue-200" : "border-gray-300 hover:border-gray-400"} ${v.total_quantity > 0 ? "" : "opacity-40"}`}
-                  style={{ backgroundColor: colorHex(v) }}
+                  className={`w-8 h-8 rounded-md border-2 transition ${selected ? "border-blue-600 ring-2 ring-blue-200" : "border-gray-300 hover:border-gray-400"} ${v.total_quantity > 0 ? "" : "opacity-40"}`}
+                  style={{ backgroundColor: colorHex(v), backgroundImage: v.image_url ? `url(${v.image_url})` : undefined, backgroundSize: "cover" }}
                 />
               );
             })}

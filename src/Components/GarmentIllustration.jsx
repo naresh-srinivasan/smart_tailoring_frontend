@@ -16,17 +16,24 @@ const COLLARS = {
   Mandarin: { left: "M80 30 Q100 42 120 30 L120 42 Q100 54 80 42 Z", right: "" },
 };
 
-export default function GarmentIllustration({ dressType, color = "#94A3B8", pattern = "Plain", collarType, sleeveType, className = "" }) {
+export default function GarmentIllustration({ dressType, color = "#94A3B8", pattern = "Plain", collarType, sleeveType, fabricImage, className = "" }) {
   const uid = useId().replace(/:/g, "");
   const light = isLight(color);
   const ink = light ? "rgba(15,23,42,0.22)" : "rgba(255,255,255,0.35)";
   const outline = light ? "#94A3B8" : "rgba(15,23,42,0.35)";
   const p = (pattern || "Plain").toLowerCase();
   const patternId = `pat-${uid}`;
-  const hasPattern = ["striped", "stripe", "checked", "check", "floral"].includes(p);
+  const hasPattern = !fabricImage && ["striped", "stripe", "checked", "check", "floral"].includes(p);
+  const fabricId = `fab-${uid}`;
+  const fill = fabricImage ? `url(#${fabricId})` : color;
 
-  const defs = hasPattern && (
+  const defs = (hasPattern || fabricImage) && (
     <defs>
+      {fabricImage && (
+        <pattern id={fabricId} width="200" height="240" patternUnits="userSpaceOnUse">
+          <image href={fabricImage} width="200" height="240" preserveAspectRatio="xMidYMid slice" />
+        </pattern>
+      )}
       {p.startsWith("stripe") && (
         <pattern id={patternId} width="10" height="10" patternUnits="userSpaceOnUse">
           <rect width="4" height="10" fill={ink} />
@@ -50,7 +57,7 @@ export default function GarmentIllustration({ dressType, color = "#94A3B8", patt
   // Body shape drawn once, then fabric colour and pattern are painted over the same path.
   const Body = ({ d }) => (
     <>
-      <path d={d} fill={color} stroke={outline} strokeWidth="1.5" strokeLinejoin="round" />
+      <path d={d} fill={fill} stroke={outline} strokeWidth="1.5" strokeLinejoin="round" />
       {hasPattern && <path d={d} fill={`url(#${patternId})`} />}
     </>
   );
@@ -66,8 +73,8 @@ export default function GarmentIllustration({ dressType, color = "#94A3B8", patt
     art = (
       <>
         <Body d={body} />
-        <path d={collar.left} fill={color} stroke={outline} strokeWidth="1.5" strokeLinejoin="round" />
-        {collar.right && <path d={collar.right} fill={color} stroke={outline} strokeWidth="1.5" strokeLinejoin="round" />}
+        <path d={collar.left} fill={fill} stroke={outline} strokeWidth="1.5" strokeLinejoin="round" />
+        {collar.right && <path d={collar.right} fill={fill} stroke={outline} strokeWidth="1.5" strokeLinejoin="round" />}
         <line x1="100" y1="58" x2="100" y2="214" stroke={outline} strokeWidth="1.2" />
         {[78, 106, 134, 162, 190].map((y) => (
           <circle key={y} cx="100" cy={y} r="2" fill={outline} />
