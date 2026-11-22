@@ -1,3 +1,4 @@
+import { API_ORIGIN } from "../../api";
 // ✅ Updated OrderSummary Component with better error handling
 export default function OrderSummary({
   gender,
@@ -53,7 +54,7 @@ export default function OrderSummary({
 
       console.log("Fetching user address from backend...");
 
-      const res = await fetch("http://localhost:5000/api/api/user/me", {
+      const res = await fetch(`${API_ORIGIN}/api/api/user/me`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

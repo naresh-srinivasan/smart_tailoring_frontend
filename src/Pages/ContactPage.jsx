@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaPhone, FaComment } from "react-icons/fa";
+import { API_ORIGIN } from "../api";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ export default function Contact() {
     e.preventDefault();
     setStatus("Sending...");
     try {
-      const response = await fetch("http://localhost:5000/api/send-contact", {
+      const response = await fetch(`${API_ORIGIN}/api/send-contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

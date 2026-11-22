@@ -1,5 +1,6 @@
 // src/Components/ResetPassword.jsx
 import React, { useState } from "react";
+import { API_ORIGIN } from "../api";
 
 export default function ForgotPassword({ onBack }) {
   const [email, setEmail] = useState("");
@@ -23,7 +24,7 @@ export default function ForgotPassword({ onBack }) {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/api/forgot-password", {
+      const res = await fetch(`${API_ORIGIN}/api/api/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

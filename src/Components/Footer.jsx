@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { API_ORIGIN } from "../api";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -39,7 +40,7 @@ export default function Footer() {
     
     try {
       // Simulate API call for newsletter subscription
-      const response = await fetch("http://localhost:5000/api/api/newsletter/subscribe", {
+      const response = await fetch(`${API_ORIGIN}/api/api/newsletter/subscribe`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +81,7 @@ export default function Footer() {
                 </p>
                 
                 <div style="text-align: center; margin-top: 30px;">
-                  <a href="http://localhost:5000/api" 
+                  <a href="${API_ORIGIN}/api" 
                      style="background-color: #286fad; color: white; padding: 12px 30px; 
                             text-decoration: none; border-radius: 6px; font-weight: bold;
                             display: inline-block;">
@@ -102,7 +103,7 @@ export default function Footer() {
         };
 
         // Send confirmation email
-        await fetch("http://localhost:5000/api/api/send-email", {
+        await fetch(`${API_ORIGIN}/api/api/send-email`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

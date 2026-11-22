@@ -5,6 +5,7 @@ import Mandarin from "../../Assests/Mandarin.png";
 import ButtonDown from "../../Assests/ButtonDown.png";
 import Spread from "../../Assests/Spread.png";
 import LongPoint from "../../Assests/LongPoint.png";
+import { API_ORIGIN } from "../../api";
 
 export default function StyleAndMaterialStep({
     gender,
@@ -37,7 +38,7 @@ export default function StyleAndMaterialStep({
     useEffect(() => {
         const fetchInventory = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/api/inventory");
+                const response = await fetch(`${API_ORIGIN}/api/api/inventory`);
                 const data = await response.json();
                 setInventory(Array.isArray(data.items) ? data.items : []);
             } catch (err) {

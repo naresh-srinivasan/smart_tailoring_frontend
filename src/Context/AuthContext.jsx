@@ -1,5 +1,6 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { API_ORIGIN } from "../api";
 
 const AuthContext = createContext();
 
@@ -16,7 +17,7 @@ export function AuthProvider({ children }) {
         return;
       }
       try {
-        const res = await fetch("http://localhost:5000/api/api/profile", {
+        const res = await fetch(`${API_ORIGIN}/api/api/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Failed to fetch user");

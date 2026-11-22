@@ -4,6 +4,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { FaDownload, FaEdit, FaEye, FaEyeSlash, FaSearch, FaFilter, FaCalendarAlt, FaTimes, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { API_ORIGIN } from "../api";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -45,7 +46,7 @@ export default function OrdersPage() {
           navigate("/login");
           return;
         }
-        const res = await axios.get("http://localhost:5000/api/api/orders/my", {
+        const res = await axios.get(`${API_ORIGIN}/api/api/orders/my`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         
@@ -78,7 +79,7 @@ export default function OrdersPage() {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `http://localhost:5000/api/api/orders/${orderId}/cancel`,
+        `${API_ORIGIN}/api/api/orders/${orderId}/cancel`,
         { reason: cancelReason },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -114,8 +115,8 @@ export default function OrdersPage() {
     try {
       const token = localStorage.getItem("token");
       const endpoint = isEditingFeedback 
-        ? `http://localhost:5000/api/api/orders/${feedbackOrderId}/feedback/update`
-        : `http://localhost:5000/api/api/orders/${feedbackOrderId}/feedback`;
+        ? `${API_ORIGIN}/api/api/orders/${feedbackOrderId}/feedback/update`
+        : `${API_ORIGIN}/api/api/orders/${feedbackOrderId}/feedback`;
       
       const method = isEditingFeedback ? 'put' : 'post';
       
@@ -163,7 +164,7 @@ export default function OrdersPage() {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `http://localhost:5000/api/api/orders/${orderId}/return`,
+        `${API_ORIGIN}/api/api/orders/${orderId}/return`,
         { reason: reasonToSend },
         { headers: { Authorization: `Bearer ${token}` } }
       );

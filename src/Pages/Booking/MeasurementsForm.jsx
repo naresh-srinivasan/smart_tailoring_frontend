@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaInfoCircle, FaArrowLeft, FaArrowRight, FaCreditCard, FaRuler, FaShoppingCart, FaCalculator, FaTags, FaGift, FaCheck, FaCog, FaUser, FaChevronDown, FaSpinner } from "react-icons/fa";
 import axios from "axios";
+import { API_ORIGIN } from "../../api";
 
 export default function MeasurementsForm({
   gender,
@@ -113,7 +114,7 @@ export default function MeasurementsForm({
     fetchCurrencies();
   }, []);
 
-  const API_BASE = "http://localhost:5000/api/api";
+  const API_BASE = `${API_ORIGIN}/api/api`;
 
   useEffect(() => {
     if (useSavedProfile) {

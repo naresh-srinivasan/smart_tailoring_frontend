@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { API_ORIGIN } from "../api";
 
 export default function EditProfile({ user, onClose, onUpdate }) {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ export default function EditProfile({ user, onClose, onUpdate }) {
     e.preventDefault();
     try {
       const res = await fetch(
-        `http://localhost:5000/api/api/user/${user._id || user.id}`,
+        `${API_ORIGIN}/api/api/user/${user._id || user.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import ForgotPassword from "../Components/ForgotPassword";
+import { API_ORIGIN } from "../api";
 
 // Professional input component with enhanced styling
 const InputField = ({ type = "text", placeholder, value, onChange, className = "" }) => (
@@ -87,7 +88,7 @@ export default function AuthPage() {
   // Forgot password state
   const [forgotPassword, setForgotPassword] = useState(false);
 
-  const API_BASE = "http://localhost:5000/api";
+  const API_BASE = `${API_ORIGIN}/api`;
 
   const validateEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

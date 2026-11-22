@@ -7,8 +7,9 @@ import { useAuth } from "../Context/AuthContext";
 import axios from "axios";
 import io from "socket.io-client";
 import profileimg from "../Assests/profile.png";
+import { API_ORIGIN, SOCKETS_ENABLED } from "../api";
 
-const SOCKET_SERVER_URL = "http://localhost:5000/api";
+const SOCKET_SERVER_URL = `${API_ORIGIN}/api`;
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,13 @@ export default function NavBar() {
     fetchNotifications();
     if (!user) return;
 
-    const socket = io(SOCKET_SERVER_URL);
+    // Without a socket server (e.g. on Vercel), refresh the badge every 30 seconds instead.
+    if (!SOCKETS_ENABLED) {
+      const timer = setInterval(fetchNotifications, 30000);
+      return () => clearInterval(timer);
+    }
+
+    const socket = io(API_ORIGIN);
     socket.on(`notification-${user.id}`, (notification) => {
       setNotifications((prev) => [notification, ...prev]);
     });

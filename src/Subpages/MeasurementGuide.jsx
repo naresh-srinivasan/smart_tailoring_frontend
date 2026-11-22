@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../Context/AuthContext";
+import { API_ORIGIN } from "../api";
 
-const API_BASE = "http://localhost:5000/api/api/measurements";
+const API_BASE = `${API_ORIGIN}/api/api/measurements`;
 
 // Measurement configurations based on your JSON - combined all measurements per gender
 const measurementConfig = {

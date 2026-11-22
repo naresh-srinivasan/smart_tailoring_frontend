@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 import { useAuth } from "../Context/AuthContext";
+import { API_ORIGIN, SOCKETS_ENABLED } from "../api";
 
-const SOCKET_SERVER_URL = "http://localhost:5000/api";
+const SOCKET_SERVER_URL = `${API_ORIGIN}/api`;
 
 export default function Notifications() {
   const { user } = useAuth();
@@ -59,9 +60,9 @@ export default function Notifications() {
     console.log("Notifications component mounted, user:", user);
     fetchNotifications();
 
-    if (!user) return;
+    if (!user || !SOCKETS_ENABLED) return;
 
-    const socket = io(SOCKET_SERVER_URL, {
+    const socket = io(API_ORIGIN, {
       transports: ['websocket', 'polling']
     });
 

@@ -38,6 +38,7 @@ import {
   AreaChart,
   Area,
 } from "recharts";
+import { API_ORIGIN } from "../api";
 
 export default function AdminDashboard() {
   const { user: authUser } = useAuth();
@@ -120,25 +121,25 @@ export default function AdminDashboard() {
           completedByDateRes,
           dailyRevenueRes,
         ] = await Promise.all([
-          axios.get("http://localhost:5000/api/api/admin/customers/count", {
+          axios.get(`${API_ORIGIN}/api/api/admin/customers/count`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:5000/api/api/admin/orders/count", {
+          axios.get(`${API_ORIGIN}/api/api/admin/orders/count`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:5000/api/api/admin/orders/stats", {
+          axios.get(`${API_ORIGIN}/api/api/admin/orders/stats`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:5000/api/api/admin/orders/daily-stats", {
+          axios.get(`${API_ORIGIN}/api/api/admin/orders/daily-stats`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           axios.get(
-            "http://localhost:5000/api/api/admin/orders/completed-daily-stats",
+            `${API_ORIGIN}/api/api/admin/orders/completed-daily-stats`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
           ),
-          axios.get("http://localhost:5000/api/api/admin/orders/daily-revenue", {
+          axios.get(`${API_ORIGIN}/api/api/admin/orders/daily-revenue`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);

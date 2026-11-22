@@ -12,6 +12,7 @@ import StyleAndMaterialStep from "./Booking/styleandMaterialstep";
 import MeasurementsForm from "./Booking/MeasurementsForm";
 import OrderSummary from "./Booking/ordeSummary";
 import OrderCompleted from "./Booking/orderCompleted";
+import { API_ORIGIN } from "../api";
 
 export default function BookNow() {
   /* ---------------- States ---------------- */
@@ -62,7 +63,7 @@ export default function BookNow() {
   const DELIVERY_CHARGE = 50;
   const LABOUR_CHARGE = 100;
   const INTERNET_HANDLING_FEES = 30;
-  const API_BASE = "http://localhost:5000/api/api";
+  const API_BASE = `${API_ORIGIN}/api/api`;
 
   /* ---------------- Fetch user profile ---------------- */
   useEffect(() => {

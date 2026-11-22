@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import EditProfile from "./EditProfile";
 import { useNavigate } from "react-router-dom";
+import { API_ORIGIN } from "../api";
 
 export default function MyAccount() {
   const [user, setUser] = useState(null);
@@ -27,7 +28,7 @@ export default function MyAccount() {
           navigate("/login");
           return;
         }
-        const { data } = await axios.get("http://localhost:5000/api/api/user/me", {
+        const { data } = await axios.get(`${API_ORIGIN}/api/api/user/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(data);
